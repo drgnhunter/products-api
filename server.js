@@ -288,3 +288,70 @@ app.delete("/api/suppliers/deleteAll/:id", (req, res, next) => {
 app.get("/", (req, res, next) => {
     res.json({ "message": "University of Moratuwa" })
 });
+
+//my code
+app.post("/api/customers/", (req, res, next) => {
+
+    try {
+        var errors = []
+
+        if (!req.body) {
+            errors.push("An invalid input");
+        }
+
+        const { customerName,
+            address,
+            email,
+            dateOfBirth,
+            creditCardNumber,
+            
+            //....
+        } = req.body;
+
+        const validateEmail = (email) => {
+            return String(email)
+              .toLowerCase()
+              .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              );
+          };
+
+          //credit card validation
+          
+
+          if(!validateEmail(email)){
+            errors.push("Inavalid Email")
+          }else if(creditCardNumber.length != 12){
+            errors.push("Invalid Credit card Number");
+          }
+
+          if(errors.length === 0){
+            var sql = 'INSERT INTO customers (customerName, address, email, dateOfBirth,.....) VALUES (?,?,?,?)'
+            var params = [supplierName, address, email, dateOfBirth]
+            db.run(sql, params, function (err, result) {
+    
+                if (err) {
+                    res.status(400).json({ "error": err.message })
+                    return;
+                } else {
+                    res.json({
+                        "message": "success",
+                        "data": req.body,
+                        "id": this.lastID
+                    })
+                }
+    
+            });
+          }else{
+            console.log(errors.values);
+          }
+
+
+         
+       
+    } catch (E) {
+        res.status(400).send(E);
+    }
+});
+
+//my code

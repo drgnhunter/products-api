@@ -43,6 +43,8 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             )`, (err) => {
             if (err) {
                 // Table already created
+            
+                db.run(create, ["D.J.Ishara", "345A ,R.A De Mel Road, Colombo 3", "16/3/2022", "0776600933"])
             } else {
                 // Table just created, creating some rows
                 var insert = 'INSERT INTO suppliers (supplierName, address, joinedDate, mobileNo) VALUES (?,?,?,?)'
@@ -50,9 +52,27 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 
             }
         })
+//my code
+        db.run(`CREATE TABLE customer (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            customerName text, 
+            address text,
+            email text,
+            dateOfBirth text,
+            cardNumber INTEGER,
+            )`, (err) => {
+            if (err) {
+                // Table already created
+            
+                db.run(create, ["A.D.Lakith Dharmasiri", "345A ,R.A De Mel Road, Colombo 3", "16/3/2022", "0776600933"])
+            } else {
+                // Table just created, creating some rows
+                var insert = 'INSERT INTO suppliers (customerName, address, email, dateOfBirth) VALUES (?,?,?,?)'
+                db.run(insert, ["A.D.Lakith Dharmasiri", "345A ,R.A De Mel Road, Colombo 3", "16/3/2022", "0776600933"])
 
-
-
+            }
+        })
+//my code
     }
 })
 
